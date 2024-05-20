@@ -2,7 +2,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib_venn import venn2, venn2_circles, venn3, venn3_circles
 
-df = pd.read_csv('datasets/cves_2021_exploited.csv')
+df = pd.read_csv('datasets/cves_2020.csv')
 #graynoise_reports_count, clam, secureworks,cisa
 
 # Initialize a counter variable
@@ -61,4 +61,4 @@ print("countSecureworksCisa: " + str(countSecureworksCisa))
 plt.figure()
 venn3(subsets=(countClam-countABC-countClamSecureworks-countClamCisa,countSecureworks-countABC-countClamSecureworks-countSecureworksCisa,countClamSecureworks,countCisa-countABC-countClamCisa-countSecureworksCisa,countClamCisa,countSecureworksCisa,countABC), set_labels=('Clam', 'Secureworks', 'Cisa'))
 plt.title("Venn Diagram of Common Non-Zero Values")
-plt.show()
+#plt.show()

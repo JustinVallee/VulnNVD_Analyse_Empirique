@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Read the CSV file into a DataFrame
-df = pd.read_csv('datasets/cves_2021_exploited.csv')
+df = pd.read_csv('datasets/cves_2019.csv')
 
 # Initialize an empty list to store rows that meet the condition
 filtered_rows = []
@@ -17,5 +17,5 @@ for index, row in df.iterrows():
 filtered_df = pd.DataFrame(filtered_rows)
 
 # Write the filtered DataFrame to a new CSV file
-filtered_df.to_csv('datasets/cves_2021_OnlyExploited.csv')
+filtered_df.to_csv('datasets/cves_2019_OnlyExploited.csv')
 
