@@ -45,7 +45,7 @@ for index, row in df.iterrows():
     if (row['secureworks'] and row['cisa'] !=0) and (row['clam'] == 0):
         countSecureworksCisa +=1
 
-
+print(row['graynoise_reports_count'])
 
 print("countGraynoise: " + str(countGraynoise))
 print("countClam: " + str(countClam))
