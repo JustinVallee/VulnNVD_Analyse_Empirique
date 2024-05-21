@@ -1,9 +1,25 @@
 import pandas as pd
 from matplotlib import pyplot as plt
-from matplotlib_venn import venn2, venn2_circles, venn3, venn3_circles
+from matplotlib_venn import venn3
 
-df = pd.read_csv('datasets/cves_2020.csv')
-#graynoise_reports_count, clam, secureworks,cisa
+df = pd.read_csv('datasets/cves_2021.csv')
+df.info()
+#df['graynoise_reports_count'].astype('int8')
+print("\nMAX:", df['graynoise_reports_count'].max(), "\n")
+
+#Reduce the memory usage by reducing type
+def set_dtypes(df):
+    #df['clam'] = df['clam'].map({1:True,0:False})
+    #df['secureworks'] = df['secureworks'].map({1:True,0:False})
+    #df['cisa'] = df['cisa'].map({1:True,0:False})
+    df['clam'] = df['clam'].astype('int8')
+    df['secureworks'] = df['secureworks'].astype('int8')
+    df['cisa'] = df['cisa'].astype('int8')
+    return df
+
+df.info()
+df = set_dtypes(df)
+print(df.head(10))
 
 # Initialize a counter variable
 countGraynoise = 0
@@ -45,9 +61,7 @@ for index, row in df.iterrows():
     if (row['secureworks'] and row['cisa'] !=0) and (row['clam'] == 0):
         countSecureworksCisa +=1
 
-    print(row['graynoise_reports_count'])
-
-print("countGraynoise: " + str(countGraynoise))
+print("\ncountGraynoise: " + str(countGraynoise))
 print("countClam: " + str(countClam))
 print("countSecureworks: " + str(countSecureworks))
 print("countCisa: " + str(countCisa))
@@ -59,6 +73,13 @@ print("countSecureworksCisa: " + str(countSecureworksCisa))
 
 # Create Venn diagram
 plt.figure()
-venn3(subsets=(countClam-countABC-countClamSecureworks-countClamCisa,countSecureworks-countABC-countClamSecureworks-countSecureworksCisa,countClamSecureworks,countCisa-countABC-countClamCisa-countSecureworksCisa,countClamCisa,countSecureworksCisa,countABC), set_labels=('Clam', 'Secureworks', 'Cisa'))
+venn3(subsets=(countClam - countABC - countClamSecureworks - countClamCisa,
+               countSecureworks - countABC - countClamSecureworks - countSecureworksCisa,
+               countClamSecureworks,
+               countCisa - countABC - countClamCisa - countSecureworksCisa,
+               countClamCisa,
+               countSecureworksCisa,
+               countABC),
+      set_labels=('Clam', 'Secureworks', 'Cisa'))
 plt.title("Venn Diagram of Common Non-Zero Values")
-#plt.show()
+plt.show()

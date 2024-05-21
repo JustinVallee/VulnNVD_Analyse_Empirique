@@ -1,8 +1,28 @@
 import pandas as pd
 
 # Read the CSV file into a DataFrame
-df = pd.read_csv('datasets/cves_2021.csv')
+df = pd.read_csv('datasets/cves_2020.csv')
 
+# Vectorized
+# Create a boolean mask where any of the specified columns are not zero
+"""
+# Exploited
+mask = (df['graynoise_reports_count'] != 0) | \
+       (df['clam'] != 0) | \
+       (df['secureworks'] != 0) | \
+       (df['cisa'] != 0)
+"""
+# Non Exploited
+mask = (df['graynoise_reports_count'] == 0) & \
+       (df['clam'] == 0) & \
+       (df['secureworks'] == 0) & \
+       (df['cisa'] == 0)
+
+# Use the mask to filter the DataFrame
+filtered_df = df[mask]
+
+# Non Vectorized
+"""
 # Initialize an empty list to store rows that meet the condition
 filtered_rows = []
 
@@ -10,13 +30,13 @@ filtered_rows = []
 for index, row in df.iterrows():
     # Check if any of the specified columns have a value different from 0
     if row['graynoise_reports_count'] != 0 or row['clam'] != 0 or row['secureworks'] != 0 or row['cisa'] != 0:
-    #if row['graynoise_reports_count'] == 0 or row['clam'] == 0 or row['secureworks'] == 0 or row['cisa'] == 0:
         # Append the row to the list of filtered rows
         filtered_rows.append(row)
 
 # Convert the list of filtered rows to a new DataFrame
 filtered_df = pd.DataFrame(filtered_rows)
+"""
 
 # Write the filtered DataFrame to a new CSV file
-filtered_df.to_csv('datasets/notExploited/cves_2021_NotExploited.csv')
+filtered_df.to_csv('datasets/notExploited/cves_2020_OnlyNotExploited.csv', index=False)
 
