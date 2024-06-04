@@ -2,7 +2,12 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib_venn import venn3
 
-df = pd.read_csv('datasets/cves_2021.csv')
+year = 2021
+#Convert CSV to parquet file
+df = pd.read_csv(f'datasets/cves_{year}.csv', index_col=[0])
+#df.to_parquet('datasets/cves_2021.parquet')
+#df = pd.read_parquet(f'datasets/cves_{year}.parquet')
+
 df.info()
 #df['graynoise_reports_count'].astype('int8')
 print("\nMAX:", df['graynoise_reports_count'].max(), "\n")
@@ -61,6 +66,7 @@ for index, row in df.iterrows():
     if (row['secureworks'] and row['cisa'] !=0) and (row['clam'] == 0):
         countSecureworksCisa +=1
 
+
 print("\ncountGraynoise: " + str(countGraynoise))
 print("countClam: " + str(countClam))
 print("countSecureworks: " + str(countSecureworks))
@@ -81,5 +87,5 @@ venn3(subsets=(countClam - countABC - countClamSecureworks - countClamCisa,
                countSecureworksCisa,
                countABC),
       set_labels=('Clam', 'Secureworks', 'Cisa'))
-plt.title("Venn Diagram of Common Non-Zero Values")
+plt.title(f"Corrélation des 3 sources (Common Non-Zero Values) en {year}")
 plt.show()
