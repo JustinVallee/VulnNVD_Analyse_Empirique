@@ -39,5 +39,4 @@ venn3(subsets=(countClam - countABC - countClamSecureworks - countClamCisa,
       set_labels=('Clam', 'Secureworks', 'Cisa'))
 
 
-plt.title(f"Corrélation des 3 sources (Common Exploited) en {year}")
 plt.show()

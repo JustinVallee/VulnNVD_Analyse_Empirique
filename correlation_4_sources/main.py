@@ -27,7 +27,7 @@ df = set_dtypes(df)
 print(df.head(10))
 
 # Initialize a counter variable
-countGraynoise = 0
+countGreynoise = 0
 countClam = 0
 countSecureworks = 0
 countCisa = 0
@@ -42,7 +42,7 @@ for index, row in df.iterrows():
     # Check if the value in the 'cisa' column is 1
     if row['graynoise_reports_count'] != 0:
         # Increment the counter
-        countGraynoise += 1
+        countGreynoise += 1
     if row['clam'] != 0:
         # Increment the counter
         countClam += 1
@@ -67,7 +67,7 @@ for index, row in df.iterrows():
         countSecureworksCisa +=1
 
 
-print("\ncountGraynoise: " + str(countGraynoise))
+print("\ncountGreynoise: " + str(countGreynoise))
 print("countClam: " + str(countClam))
 print("countSecureworks: " + str(countSecureworks))
 print("countCisa: " + str(countCisa))

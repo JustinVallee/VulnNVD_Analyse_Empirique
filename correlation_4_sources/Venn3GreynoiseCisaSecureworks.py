@@ -10,38 +10,37 @@ df = pd.read_csv(f'datasets/correctedCves/cves_{year}.csv')
 df['graynoise_reports_count'] = df['graynoise_reports_count'].apply(lambda x: 1 if x > 0 else 0)
 
 # Calculate counts for each column
-countGraynoise = df['graynoise_reports_count'].astype(bool).sum()
+countGreynoise = df['graynoise_reports_count'].astype(bool).sum()
 countCisa = df['cisa'].astype(bool).sum()
 countSecureworks = df['secureworks'].astype(bool).sum()
 
 # Calculate correlation counts
 countABC = ((df['cisa'] != 0) & (df['secureworks'] != 0) & (df['graynoise_reports_count'] != 0)).sum()
 countCisaSecureworks = ((df['cisa'] != 0) & (df['secureworks'] != 0) & (df['graynoise_reports_count'] == 0)).sum()
-countCisaGraynoise = ((df['cisa'] != 0) & (df['secureworks'] == 0) & (df['graynoise_reports_count'] != 0)).sum()
-countSecureworksGraynoise = ((df['cisa'] == 0) & (df['secureworks'] != 0) & (df['graynoise_reports_count'] != 0)).sum()
+countCisaGreynoise = ((df['cisa'] != 0) & (df['secureworks'] == 0) & (df['graynoise_reports_count'] != 0)).sum()
+countSecureworksGreynoise = ((df['cisa'] == 0) & (df['secureworks'] != 0) & (df['graynoise_reports_count'] != 0)).sum()
 
 
 # Print counts
-print("countGraynoise:", countGraynoise)
+print("countGreynoise:", countGreynoise)
 print("countClam:", countCisa)
 print("countSecureworks:", countSecureworks)
 
 print("\ncountABC:", countABC)
 print("countClamSecureworks:", countCisaSecureworks)
-print("countClamGraynoise:", countCisaGraynoise)
-print("countSecureworksGraynoise:", countSecureworksGraynoise)
+print("countClamGreynoise:", countCisaGreynoise)
+print("countSecureworksGreynoise:", countSecureworksGreynoise)
 
 
 # Create Venn diagram
 plt.figure()
-venn3(subsets=(countCisa - countABC - countCisaSecureworks - countCisaGraynoise,
-               countSecureworks - countABC - countCisaSecureworks - countSecureworksGraynoise,
+venn3(subsets=(countCisa - countABC - countCisaSecureworks - countCisaGreynoise,
+               countSecureworks - countABC - countCisaSecureworks - countSecureworksGreynoise,
                countCisaSecureworks,
-               countGraynoise - countABC - countCisaGraynoise - countSecureworksGraynoise,
-               countCisaGraynoise,
-               countSecureworksGraynoise,
+               countGreynoise - countABC - countCisaGreynoise - countSecureworksGreynoise,
+               countCisaGreynoise,
+               countSecureworksGreynoise,
                countABC),
-      set_labels=('Cisa', 'Secureworks', 'Graynoise'))
+      set_labels=('Cisa', 'Secureworks', 'Greynoise'))
 
-plt.title(f"Corrélation des 3 sources (Common Exploited) en {year}")
 plt.show()
