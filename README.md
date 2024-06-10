@@ -10,5 +10,5 @@ de National Institute of Standards and Technology (NIST).
 ## correlation_4_sources
 Cette étape consiste à trouver le degré de corrélation entre les 4 sources des datasets provenant de la NVD de NIST.
 
-Les 4 sources sont CISA : Cybersecurity and Infrastructure Security Agency (gouvernement des É.-U.), Greynoise, SecureWorks et ClamAV (trois entreprises en cybersécurité).
+Les 4 sources sont : CISA (Cybersecurity and Infrastructure Security Agency (gouvernement des É.-U.)), Greynoise, SecureWorks et ClamAV (trois entreprises en cybersécurité).
 
