@@ -1,7 +1,7 @@
 # Effectuer une analyse empirique sur les vulnérabilités
 
 ## Objectif principal
-Possédant les datasets de plusieurs années 2019,2020 et 2021.
+Possédant les datasets de plusieurs années 2019, 2020 et 2021.
 L'objectif principal de ce projet est de comprendre et de trouver comment les vulnérabilités exploitées se diffèrent de celles non exploitées, 
 ainsi que les raisons pour lesquelles certaines vulnérabilités sont exploitées tandis que d'autres ne le sont pas. 
 Les vulnérabilités analysées seront celles répertoriées sous les CVEs (Common Vulnerability Enumeration) provenant de la National Vulnerability Database (NVD) 
