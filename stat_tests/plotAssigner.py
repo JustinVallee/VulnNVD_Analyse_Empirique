@@ -11,7 +11,7 @@ metrics = [
 
     # Metadata
     'cve.CVE_data_meta.ASSIGNER',  # metrics[0]
-    
+
     # Base Metrics
     'impact.baseMetricV3.cvssV3.attackVector',  # metrics[1]
     'impact.baseMetricV3.cvssV3.attackComplexity',  # metrics[2]
@@ -43,14 +43,12 @@ print(metric)
 
 # Create the contingency table
 contingency_table = pd.crosstab(df[f'{metric}'], df['exploited'])
+
+contingency_table = contingency_table[contingency_table[1] >= 10]
 print(contingency_table)
 
-# Calculate the ratio between exploited and non-exploited
-ratio_exploited_nonexploited = contingency_table[1] / contingency_table[0]
-print(ratio_exploited_nonexploited)
-
 # Plot the contingency table
-fig, ax = plt.subplots(figsize=(7, 6))  # Adjust the figsize as needed
+fig, ax = plt.subplots(figsize=(15, 6))  # Adjust the figsize as needed
 contingency_table.plot(kind='bar', stacked=False, ax=ax)
 plt.title(' ', size=25)
 
@@ -60,9 +58,8 @@ plt.xlabel(f'{formatted_string_metric}')
 
 plt.ylabel('Nombre de Vulnérabilités')
 plt.legend(labels=['Non Exploited', 'Exploited'])
-plt.xticks(rotation=45)
+#plt.xticks(rotation=45)
 plt.tight_layout()
-
 
 # Get the current y-axis limits
 ylim = ax.get_ylim()
@@ -78,10 +75,5 @@ for values in range(len(contingency_table)):
             ax.text(values - 0.23, value, str(value), va='bottom')
         else:  # 'Exploited'
             ax.text(values + 0.025, value, str(value), va='bottom')
-            # Add ratio annotation
-            ratio_value = ratio_exploited_nonexploited.iloc[values] * 100
-            # Adjust the vertical position of the ratio annotation based on the maximum height
-            ax.text(values, max_height_plot, f'{ratio_value:.2f}%', va='bottom', ha='center', color="red")
-
 
 plt.show()

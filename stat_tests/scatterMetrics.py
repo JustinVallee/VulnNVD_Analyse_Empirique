@@ -11,7 +11,7 @@ metrics = [
 
     # Metadata
     'cve.CVE_data_meta.ASSIGNER',  # metrics[0]
-    
+
     # Base Metrics
     'impact.baseMetricV3.cvssV3.attackVector',  # metrics[1]
     'impact.baseMetricV3.cvssV3.attackComplexity',  # metrics[2]
@@ -37,51 +37,32 @@ metrics = [
     'impact.baseMetricV3.impactScore'  # metrics[12]
 ]
 
-# Selection de la métrique
-metric = metrics[0]
+# Select the metric
+metric = metrics[11]
 print(metric)
 
 # Create the contingency table
 contingency_table = pd.crosstab(df[f'{metric}'], df['exploited'])
 print(contingency_table)
 
-# Calculate the ratio between exploited and non-exploited
-ratio_exploited_nonexploited = contingency_table[1] / contingency_table[0]
-print(ratio_exploited_nonexploited)
+# Prepare data for scatter plot
+x = contingency_table.index
+#y_nonexploited = contingency_table[0]
+y_exploited = contingency_table[1]
+print(x)
 
-# Plot the contingency table
+
+# Plot the scatter plot
 fig, ax = plt.subplots(figsize=(7, 6))  # Adjust the figsize as needed
-contingency_table.plot(kind='bar', stacked=False, ax=ax)
-plt.title(' ', size=25)
+#ax.scatter(x, y_nonexploited, label='Non Exploited')
+ax.scatter(x, y_exploited, color='darkorange', label='Exploited')
 
-# Nom de la métrique
-formatted_string_metric = metric.rpartition('.')[-1]
+formatted_string_metric = metric.rpartition('.')[-1]  # Format the metric name
 plt.xlabel(f'{formatted_string_metric}')
-
 plt.ylabel('Nombre de Vulnérabilités')
-plt.legend(labels=['Non Exploited', 'Exploited'])
+plt.legend(loc='upper left')
 plt.xticks(rotation=45)
 plt.tight_layout()
-
-
-# Get the current y-axis limits
-ylim = ax.get_ylim()
-
-# Extract the maximum value of the y-axis (top of the plot)
-max_height_plot = ylim[1]
-
-# Add text annotations for each bar and its ratio
-for values in range(len(contingency_table)):
-    for exploited in range(len(contingency_table.columns)):
-        value = contingency_table.iloc[values, exploited]
-        if exploited == 0:  # 'Non Exploited'
-            ax.text(values - 0.23, value, str(value), va='bottom')
-        else:  # 'Exploited'
-            ax.text(values + 0.025, value, str(value), va='bottom')
-            # Add ratio annotation
-            ratio_value = ratio_exploited_nonexploited.iloc[values] * 100
-            # Adjust the vertical position of the ratio annotation based on the maximum height
-            ax.text(values, max_height_plot, f'{ratio_value:.2f}%', va='bottom', ha='center', color="red")
 
 
 plt.show()
