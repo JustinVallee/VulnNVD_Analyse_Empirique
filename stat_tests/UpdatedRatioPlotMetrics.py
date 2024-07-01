@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Read the CSV file into a DataFrame
 year = 2021
-df = pd.read_csv(f'../DataBoolExploited/cves_{year}_BoolExploited.csv')
+df = pd.read_csv(f'cves_{year}_BoolExploited_with_vendors_products.csv')
 
 # Métrique à tester
 metrics = [
